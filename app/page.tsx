@@ -2,7 +2,7 @@ import Image from "next/image"
 import { db } from "./_lib/prisma"
 import Header from "./_components/header"
 
-import { SearchIcon } from "lucide-react"
+import { EyeIcon, FootprintsIcon, SearchIcon } from "lucide-react"
 import { Badge } from "./_components/ui/badge"
 import { Input } from "./_components/ui/input"
 import { Button } from "./_components/ui/button"
@@ -33,6 +33,39 @@ const Home = async () => {
           <Input placeholder="Faça sua busca" />
           <Button>
             <SearchIcon />
+          </Button>
+        </div>
+
+        {/* BUSCA RÁPIDA */}
+        <div className="mt-6 flex justify-between gap-3 overflow-x-scroll pb-3 [&::-webkit-scrollbar]:hidden">
+          <Button className="gap-2" variant="secondary">
+            <Image src="/cabelo.svg" height={16} width={16} alt="Cabelo" />
+            Cabelo
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image src="/barba.svg" height={16} width={16} alt="Barba" />
+            Barba
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image
+              src="/acabamento.svg"
+              height={16}
+              width={16}
+              alt="Acabamento"
+            />
+            Acabamento
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <FootprintsIcon size={16} />
+            Pézinho
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <EyeIcon size={16} />
+            Sobrancelha
           </Button>
         </div>
 
@@ -76,7 +109,7 @@ const Home = async () => {
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Recomendados
         </h2>
-        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-4 overflow-auto pb-3 [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
@@ -85,12 +118,21 @@ const Home = async () => {
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Populares
         </h2>
-        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-4 overflow-auto pb-3 [&::-webkit-scrollbar]:hidden">
           {popularBarbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
       </div>
+      <footer>
+        <Card>
+          <CardContent className="px-5 py-6">
+            <p className="text-sm text-gray-400">
+              © 2023 Copyright <span className="font-bold">FSW Barber</span>
+            </p>
+          </CardContent>
+        </Card>
+      </footer>
     </div>
   )
 }
