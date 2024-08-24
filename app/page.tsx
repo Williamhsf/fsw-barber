@@ -58,7 +58,7 @@ const Home = async () => {
         <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
           {quickSearchOptions.map((option) => (
             <Button
-              className="gap-2"
+              className="mb-2 gap-2"
               variant="secondary"
               key={option.title}
               asChild
@@ -91,7 +91,7 @@ const Home = async () => {
           Agendamentos
         </h2>
 
-        <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-3 overflow-x-auto py-2 [&::-webkit-scrollbar]:hidden">
           {confirmedBookings.map((booking) => (
             <BookingItem key={booking.id} booking={booking} />
           ))}
