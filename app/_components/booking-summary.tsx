@@ -1,6 +1,6 @@
 // TODO: Create a BookingSummary component that displays the booking summary details.
-const BookingSummary = () => {
-  return <></>
-}
+// const BookingSummary = () => {
+//   return <></>
+// }
 
-export default BookingSummary
+// export default BookingSummary
