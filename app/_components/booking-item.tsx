@@ -172,6 +172,19 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <PhoneItem key={index} phone={phone} />
             ))}
           </div>
+          {/* <div className="mb-3 mt-6">
+            <BookingSummary
+              barbershop={barbershop}
+              service={booking.service}
+              selectedDate={booking.date}
+            />
+          </div> */}
+
+          {/* <div className="space-y-3">
+            {barbershop.phones.map((phone, index) => (
+              <PhoneItem key={index} phone={phone} />
+            ))}
+          </div> */}
         </div>
         <SheetFooter className="mt-6">
           <div className="flex items-center gap-3">
