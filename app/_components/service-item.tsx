@@ -18,10 +18,11 @@ import { isPast, isToday, set } from "date-fns"
 import { createBooking } from "../_actions/create-booking"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
-import { getBookings } from "../_actions/get-booking"
 import { Dialog, DialogContent } from "./ui/dialog"
 import SignInDialog from "./sign-in-dialog"
 import BookingSummary from "./booking-summary"
+import { useRouter } from "next/navigation"
+import { getBookings } from "../_actions/get-booking"
 
 interface ServiceItemProps {
   service: BarbershopService
@@ -72,7 +73,6 @@ const getTimeList = ({ bookings, selectedDay }: GetTimeListProps) => {
         booking.date.getHours() === hour &&
         booking.date.getMinutes() === minutes,
     )
-
     if (hasBookingOnCurrentTime) {
       return false
     }
@@ -81,8 +81,9 @@ const getTimeList = ({ bookings, selectedDay }: GetTimeListProps) => {
 }
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
-  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const { data } = useSession()
+  const router = useRouter()
+  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
@@ -135,16 +136,20 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const handleCreateBooking = async () => {
     try {
       if (!selectedDate) return
-
       await createBooking({
         serviceId: service.id,
         date: selectedDate,
       })
       handleBookingSheetOpenChange()
-      toast.success("Reserva criada com sucesso")
+      toast.success("Reserva criada com sucesso!", {
+        action: {
+          label: "Ver agendamentos",
+          onClick: () => router.push("/bookings"),
+        },
+      })
     } catch (error) {
       console.error(error)
-      toast.error("Erro ao criar uma reserva")
+      toast.error("Erro ao criar reserva!")
     }
   }
 
@@ -160,16 +165,15 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     <>
       <Card>
         <CardContent className="flex items-center gap-3 p-3">
-          {/* IMAGEM */}
+          {/* IMAGE */}
           <div className="relative max-h-[110px] min-h-[110px] min-w-[110px] max-w-[110px]">
             <Image
+              alt={service.name}
               src={service.imageUrl}
               fill
-              className="object-coverj rounded-xl"
-              alt={service.name}
+              className="rounded-lg object-cover"
             />
           </div>
-
           {/* DIREITA */}
           <div className="space-y-2">
             <h3 className="text-sm font-semibold">{service.name}</h3>
@@ -249,7 +253,9 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                           </Button>
                         ))
                       ) : (
-                        <p className="text-xs">Não há horários para este dia</p>
+                        <p className="text-xs">
+                          Não há horários disponíveis para este dia.
+                        </p>
                       )}
                     </div>
                   )}
